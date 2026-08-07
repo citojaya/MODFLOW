@@ -2,5 +2,6 @@ BEGIN OPTIONS
 END OPTIONS
 
 BEGIN GRIDDATA
-  STRT  OPEN/CLOSE  initial_heads.dat
+  STRT
+    OPEN/CLOSE  initial_heads.dat
 END GRIDDATA
