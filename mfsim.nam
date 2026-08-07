@@ -1,0 +1,14 @@
+BEGIN OPTIONS
+END OPTIONS
+
+BEGIN TIMING
+  TDIS6  beginner.tdis
+END TIMING
+
+BEGIN MODELS
+  GWF6  beginner.nam  beginner
+END MODELS
+
+BEGIN SOLUTIONGROUP 1
+  IMS6  beginner.ims  beginner
+END SOLUTIONGROUP

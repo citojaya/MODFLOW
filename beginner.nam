@@ -1,0 +1,13 @@
+BEGIN OPTIONS
+  LIST  beginner.lst
+END OPTIONS
+
+BEGIN PACKAGES
+  DIS6   beginner.dis   dis
+  IC6    beginner.ic    ic
+  NPF6   beginner.npf   npf
+  CHD6   beginner.chd   chd
+  RCHA6  beginner.rcha  rcha
+  WEL6   beginner.wel   wel
+  OC6    beginner.oc    oc
+END PACKAGES
