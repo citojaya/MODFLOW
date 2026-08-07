@@ -30,7 +30,7 @@ remove the remainder needed to balance the steady-state model.
 - `beginner.dis`: grid and layer elevations
 - `beginner.npf`: hydraulic properties
 - `beginner.chd`: left and right constant heads
-- `beginner.rcha`: recharge
+- `beginner.rch`: recharge (list-based RCH6 format for broad version compatibility)
 - `beginner.wel`: pumping well
 - `beginner.oc`: head and budget output controls
 

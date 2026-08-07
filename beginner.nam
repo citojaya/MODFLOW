@@ -7,7 +7,7 @@ BEGIN PACKAGES
   IC6    beginner.ic    ic
   NPF6   beginner.npf   npf
   CHD6   beginner.chd   chd
-  RCHA6  beginner.rcha  rcha
+  RCH6   beginner.rch   rch
   WEL6   beginner.wel   wel
   OC6    beginner.oc    oc
 END PACKAGES
