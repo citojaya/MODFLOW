@@ -1,0 +1,11 @@
+# Conda mf6 environment
+
+conda create -n mf6 -c conda-forge ^
+  python=3.12 ^
+  flopy ^
+  vtk ^
+  pyvista ^
+  matplotlib ^
+  numpy ^
+  pandas ^
+  jupyterlab
