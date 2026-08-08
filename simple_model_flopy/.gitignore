@@ -1,0 +1,37 @@
+# Python cache and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.conda/
+
+# MODFLOW 6 calculated output and listing files
+*.hds
+*.hed
+*.cbc
+*.bud
+*.lst
+*.list
+*.grb
+
+# Generated figures
+calculated_heads.png
+
+# ParaView / VTK exports
+paraview/
+*.vtk
+*.vtu
+*.pvtu
+*.pvd
+
+# PBS batch output and error logs
+*.o[0-9]*
+*.e[0-9]*
+*.OU
+*.ER
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
