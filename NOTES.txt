@@ -9,3 +9,26 @@ conda create -n mf6 -c conda-forge ^
   numpy ^
   pandas ^
   jupyterlab
+
+
+
+# Commonly used MODFLOW files
+
+project/
+├── model_input/
+│   ├── mfsim.nam
+│   ├── model.tdis
+│   ├── model.ims
+│   ├── flow.nam
+│   └── package files
+├── model_output/
+│   ├── flow.hds
+│   ├── flow.cbc
+│   └── listing files
+├── scripts/
+│   ├── build_model.py
+│   ├── run_model.py
+│   └── postprocess.py
+└── figures-or-vtk/
+    ├── heads.pvd
+    └── result files

@@ -1,9 +1,29 @@
 # Beginner MODFLOW 6 model built with FloPy
 
 This project contains a steady-state groundwater-flow model defined entirely
-in [`build_model.py`](build_model.py). FloPy creates the MODFLOW 6 input files
-locally. The generated files can then be transferred to a remote server and
-run using [`run_mf6.sh`](run_mf6.sh).
+in [`scripts/build_model.py`](scripts/build_model.py). FloPy creates the
+MODFLOW 6 input files locally. The project can then be transferred to a remote
+server and run using [`run_mf6.sh`](run_mf6.sh).
+
+## Project structure
+
+```text
+simple_model_flopy/
+|-- config/               Model configuration files
+|-- data/
+|   |-- raw/              Original source data
+|   `-- processed/        Prepared model data
+|-- scripts/
+|   |-- build_model.py    FloPy model definition and input writer
+|   |-- plot_results.py   Head plotting
+|   `-- export_paraview.py
+|-- model_input/          Generated MODFLOW 6 input files
+|-- model_output/         Calculated heads and cell budgets
+|-- figures/              Plots and ParaView exports
+|-- tests/                Automated tests
+|-- run_mf6.sh            Remote PBS job script
+`-- README.md
+```
 
 ## Model definition
 
@@ -43,66 +63,67 @@ conda activate mf6
 From this directory, run:
 
 ```powershell
-python build_model.py
+python scripts/build_model.py
 ```
 
 The script:
 
 1. Defines the simulation and groundwater-flow model with FloPy.
-2. Writes the MODFLOW 6 simulation and package files into this directory.
+2. Writes the MODFLOW 6 simulation and package files into `model_input/`.
 
 It does not run MODFLOW 6 and therefore does not require a local `mf6`
 executable.
 
-Generated input files include `mfsim.nam`, `beginner.nam`, `beginner.tdis`,
-`beginner.ims`, `beginner.dis`, `beginner.ic`, `beginner.npf`, `beginner.chd`,
-`beginner.rcha`, `beginner.wel`, and `beginner.oc`.
+Generated input files include `mfsim.nam`, `beginner.nam`,
+`beginner_simulation.tdis`, `beginner_simulation.ims`, `beginner.dis`,
+`beginner.ic`, `beginner.npf`, `beginner.chd`, `beginner.rcha`, `beginner.wel`,
+and `beginner.oc`.
 
 ## Run on the remote server
 
-Transfer the generated input files and `run_mf6.sh` to the same directory on
-the remote server, then submit the PBS job:
+Transfer the complete project directory to the remote server, then submit the
+PBS job from the project root:
 
 ```bash
 qsub run_mf6.sh
 ```
 
-The job script runs `mf6` directly. The server environment must make the
-MODFLOW 6 executable available on `PATH`; adjust the server's `module load`
-commands in `run_mf6.sh` if required.
+The job script changes into `model_input/` and runs `mf6` directly. The server
+environment must make the MODFLOW 6 executable available on `PATH`; adjust
+the server's `module load` commands in `run_mf6.sh` if required.
 
 The main calculated outputs are:
 
-- `beginner.hds`: binary simulated heads
-- `beginner.cbc`: binary cell-by-cell flows
-- `beginner.lst`: model listing and water budget
-- `mfsim.lst`: simulation listing
+- `model_output/beginner.hds`: binary simulated heads
+- `model_output/beginner.cbc`: binary cell-by-cell flows
+- `model_input/beginner.lst`: model listing and water budget
+- `model_input/mfsim.lst`: simulation listing
 
 Running the builder replaces generated MODFLOW input files such as
-`mfsim.nam`, `beginner.nam`, `beginner.dis`, and the other package files with
-the definitions in `build_model.py`.
+`model_input/mfsim.nam`, `model_input/beginner.nam`, and the other package
+files with the definitions in `scripts/build_model.py`.
 
 ## Plot results
 
 After a successful model run:
 
 ```powershell
-python plot_results.py
+python scripts/plot_results.py
 ```
 
 This prints selected head statistics, displays the head contours, and writes
-`calculated_heads.png`.
+`figures/calculated_heads.png`.
 
 ## Export for ParaView
 
 After a successful model run:
 
 ```powershell
-python export_paraview.py
+python scripts/export_paraview.py
 ```
 
 This writes calculated heads and specific-discharge vectors to the
-`paraview/` directory.
+`figures/paraview/` directory.
 
 ## PBS/HPC execution
 

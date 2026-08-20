@@ -4,13 +4,17 @@ import flopy
 import matplotlib.pyplot as plt
 import numpy as np
 
-workspace = Path(__file__).resolve().parent
+project_root = Path(__file__).resolve().parent.parent
+model_input = project_root / "model_input"
+model_output = project_root / "model_output"
+figures = project_root / "figures"
+figures.mkdir(parents=True, exist_ok=True)
 
 # Read the MODFLOW 6 model and calculated heads
-sim = flopy.mf6.MFSimulation.load(sim_ws=workspace)
+sim = flopy.mf6.MFSimulation.load(sim_ws=model_input)
 model = sim.get_model("beginner")
 
-head_file = flopy.utils.HeadFile(workspace / "beginner.hds")
+head_file = flopy.utils.HeadFile(model_output / "beginner.hds")
 heads = head_file.get_data()       # shape: (layer, row, column)
 head = heads[0]
 
@@ -50,5 +54,5 @@ ax.legend()
 ax.set_aspect("equal")
 
 plt.tight_layout()
-plt.savefig(workspace / "calculated_heads.png", dpi=200)
+plt.savefig(figures / "calculated_heads.png", dpi=200)
 plt.show()

@@ -8,12 +8,16 @@ import numpy as np
 
 SIMULATION_NAME = "beginner_simulation"
 MODEL_NAME = "beginner"
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+MODEL_INPUT = PROJECT_ROOT / "model_input"
+MODEL_OUTPUT = PROJECT_ROOT / "model_output"
 
 
-def build_model(workspace: str | Path = PROJECT_ROOT, executable: str = "mf6"):
+def build_model(workspace: str | Path = MODEL_INPUT, executable: str = "mf6"):
     """Create the MODFLOW 6 simulation in memory and return it."""
     workspace = Path(workspace)
+    workspace.mkdir(parents=True, exist_ok=True)
+    MODEL_OUTPUT.mkdir(parents=True, exist_ok=True)
 
     # Model dimensions and hydraulic properties.
     nlay, nrow, ncol = 1, 21, 21
@@ -109,8 +113,8 @@ def build_model(workspace: str | Path = PROJECT_ROOT, executable: str = "mf6"):
 
     flopy.mf6.ModflowGwfoc(
         groundwater_flow,
-        head_filerecord=f"{MODEL_NAME}.hds",
-        budget_filerecord=f"{MODEL_NAME}.cbc",
+        head_filerecord=f"../model_output/{MODEL_NAME}.hds",
+        budget_filerecord=f"../model_output/{MODEL_NAME}.cbc",
         saverecord=[("HEAD", "ALL"), ("BUDGET", "ALL")],
         printrecord=[("HEAD", "LAST"), ("BUDGET", "ALL")],
     )
@@ -122,7 +126,7 @@ def main() -> None:
     """Write the MODFLOW 6 input files without running the model."""
     simulation = build_model()
     simulation.write_simulation()
-    print(f"MODFLOW 6 input files written to: {PROJECT_ROOT}")
+    print(f"MODFLOW 6 input files written to: {MODEL_INPUT}")
     print("Submit run_mf6.sh on the remote server to run the model.")
 
 

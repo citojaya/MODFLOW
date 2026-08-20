@@ -9,6 +9,9 @@
 echo "Running in:"
 pwd
 
+cd "$(dirname "$0")/model_input" || exit 1
+mkdir -p ../model_output
+
 echo "Using MODFLOW 6 executable:"
 which mf6
 
